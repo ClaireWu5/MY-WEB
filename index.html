@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Digital Herbary &amp; Chaos · 数字温室标本馆</title>
+  <meta name="description" content="数字温室标本馆与混沌繁育地 — 一张拼贴理性实习项目与感性爱好涂鸦的标本桌面。" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;0,900;1,500;1,700&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&family=Permanent+Marker&family=Bungee&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- 工程蓝图网格底图 + 颗粒 -->
+  <div class="blueprint-grid" aria-hidden="true"></div>
+  <div class="paper-grain" aria-hidden="true"></div>
+  <!-- 四角工程标记 -->
+  <span class="corner-mark tl" aria-hidden="true">+</span>
+  <span class="corner-mark tr" aria-hidden="true">+</span>
+  <span class="corner-mark bl" aria-hidden="true">+</span>
+  <span class="corner-mark br" aria-hidden="true">+</span>
+
+  <!-- ============ 顶部：园丁标识 + 状态过滤器 ============ -->
+  <header class="topbar" id="top">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">❀</span>
+      <span class="brand-text">
+        <span class="brand-title">CLAIRE'S DIGITAL HERBARY<span class="brand-cn">我的枝蔓</span></span>
+      </span>
+    </div>
+
+    <nav class="status-filter" aria-label="种子生长状态过滤器">
+      <span class="filter-label" aria-hidden="true">[ STATUS_FILTER ]</span>
+      <button class="filter-btn is-active" data-filter="all"><span class="ic" aria-hidden="true">✦</span><span class="txt"> ALL / 全部</span></button>
+      <button class="filter-btn" data-filter="seed" data-jump="#seed"><span class="ic" aria-hidden="true">🌱</span><span class="txt"> SEED 种</span></button>
+      <button class="filter-btn" data-filter="growing" data-jump="#growing"><span class="ic" aria-hidden="true">🌿</span><span class="txt"> GROWING 芽</span></button>
+      <button class="filter-btn" data-filter="evergreen" data-jump="#evergreen"><span class="ic" aria-hidden="true">🌳</span><span class="txt"> EVERGREEN 果</span></button>
+    </nav>
+  </header>
+
+  <main class="canvas">
+
+    <!-- ============ 区块 1：HERO ============ -->
+    <section class="hero" aria-label="温室大门与园丁宣言">
+      <div class="hero-left">
+        <span class="code-tag tag-tl" aria-hidden="true">[ PRIMARY_SPECIMEN / 01 ]</span>
+        <h1 class="hero-title">
+          我把<em>理性</em>的标本，<br />
+          与<span class="graffiti-word">野生</span>的种子，<br />
+          一起钉在这张桌面上。
+        </h1>
+        <p class="hero-intro">
+          人其实有两次生命，当你意识到生命只有一次的时候，第二次生命就开始了。
+        </p>
+        <div class="hero-signature" aria-hidden="true">Claire</div>
+
+        <a class="hero-cta" href="#evergreen">
+          <span class="arrow">↓</span>
+        </a>
+      </div>
+
+      <div class="hero-right">
+        <span class="code-tag tag-illu" aria-hidden="true">[ VECTOR_ASSET ]</span>
+        <div class="greenhouse-illu" role="img" aria-label="蕨类植物标本手绘插画">
+          <!-- 蕨类标本 SVG（参考图主视觉） -->
+          <svg viewBox="0 0 220 340" class="fern-svg" aria-hidden="true">
+            <line x1="110" y1="320" x2="110" y2="40" stroke="#C9D3C2" stroke-width="2.2" stroke-linecap="round"/>
+            <g stroke="#C9D3C2" stroke-width="1.4" stroke-linecap="round" fill="none">
+              <!-- 左右羽叶 -->
+              <path d="M110 70 C80 60 60 66 46 52 M110 70 C84 78 70 86 58 80"/>
+              <path d="M110 95 C76 84 54 90 38 74 M110 95 C80 104 64 112 50 106"/>
+              <path d="M110 122 C72 110 48 116 30 98 M110 122 C78 132 60 140 44 134"/>
+              <path d="M110 150 C70 138 44 144 26 124 M110 150 C76 160 56 168 40 162"/>
+              <path d="M110 180 C72 168 48 174 30 156 M110 180 C78 190 60 198 46 192"/>
+              <path d="M110 210 C76 200 54 206 38 190 M110 210 C82 220 66 226 52 222"/>
+              <path d="M110 240 C80 232 62 238 48 224 M110 240 C84 248 70 254 58 250"/>
+              <path d="M110 268 C84 262 70 266 58 256 M110 268 C88 274 76 278 66 276"/>
+              <!-- 右侧镜像 -->
+              <path d="M110 70 C140 60 160 66 174 52 M110 70 C136 78 150 86 162 80"/>
+              <path d="M110 95 C144 84 166 90 182 74 M110 95 C140 104 156 112 170 106"/>
+              <path d="M110 122 C148 110 172 116 190 98 M110 122 C142 132 160 140 176 134"/>
+              <path d="M110 150 C150 138 176 144 194 124 M110 150 C144 160 164 168 180 162"/>
+              <path d="M110 180 C148 168 172 174 190 156 M110 180 C142 190 160 198 174 192"/>
+              <path d="M110 210 C144 200 166 206 182 190 M110 210 C138 220 154 226 168 222"/>
+              <path d="M110 240 C140 232 158 238 172 224 M110 240 C136 248 150 254 162 250"/>
+            </g>
+          </svg>
+          <!-- 彩色拼贴碎片（参考图左下三角块） -->
+          <span class="collage-bits" aria-hidden="true">
+            <i style="--c:#C7402E"></i><i style="--c:#E0A33E"></i><i style="--c:#3E7CB1"></i><i style="--c:#6FA86B"></i>
+          </span>
+          <span class="hero-washi" aria-hidden="true"></span>
+        </div>
+        <span class="leader-line v-leader" aria-hidden="true"></span>
+      </div>
+    </section>
+
+    <!-- ============ 地平线 / 土壤表层 ============ -->
+    <div class="ground-line" aria-hidden="true">
+      <span class="corner-mark gl-l">+</span>
+      <span class="ground-label">[ GROUND_LEVEL / 地表 ]</span>
+      <span class="corner-mark gl-r">+</span>
+    </div>
+
+    <!-- ============ 根系主茎（纵向贯穿三层） ============ -->
+    <svg class="taproot" id="taproot" viewBox="0 0 200 1000" preserveAspectRatio="none" aria-hidden="true">
+      <path class="taproot-path" id="taprootPath"
+        d="M100 0 C100 80 96 120 102 200 C108 280 92 320 100 420 C106 500 94 540 100 660 C108 780 96 820 100 1000"
+        fill="none" stroke="var(--clay)" stroke-width="2.4" stroke-linecap="round"/>
+      <path class="taproot-hair" d="M100 320 C70 340 50 332 32 350 M100 660 C132 678 152 670 172 690 M100 200 C128 214 146 208 164 226"
+        fill="none" stroke="var(--clay)" stroke-width="1" stroke-linecap="round" opacity=".4"/>
+    </svg>
+
+    <!-- ============ 层一：EVERGREEN / 果（顶 · 最饱满） ============ -->
+    <section class="layer layer-evergreen" id="evergreen" data-layer="evergreen" aria-label="已结果 — 实习 / 项目 / 交换">
+      <span class="layer-node" aria-hidden="true"><i></i>[ FRUITED_LAYER / 01 ]</span>
+      <span class="graffiti-tag layer-graffiti g-fruit" aria-hidden="true">FRUITED</span>
+
+      <div class="orchard" id="orchard">
+        <!-- 同层根须连线层（JS 绘制） -->
+        <svg class="root-web" id="rootWebFruit" aria-hidden="true"></svg>
+
+        <!-- ---- 实习（蓝图钉标记 type-intern） ---- -->
+        <article class="fruit type-intern" data-layer="evergreen" data-group="intern" style="--rot:-2.5deg">
+          <span class="pin" aria-hidden="true"></span>
+          <span class="fruit-code" aria-hidden="true">[ INTERNSHIP ]</span>
+          <p class="fruit-year">2023</p>
+          <h3 class="fruit-org">小米</h3>
+          <p class="fruit-role">用户产品</p>
+        </article>
+
+        <article class="fruit type-intern" data-layer="evergreen" data-group="intern" style="--rot:1.8deg">
+          <span class="pin" aria-hidden="true"></span>
+          <span class="fruit-code" aria-hidden="true">[ INTERNSHIP ]</span>
+          <p class="fruit-year">2024</p>
+          <h3 class="fruit-org">小红书</h3>
+          <p class="fruit-role">AI 产品</p>
+        </article>
+
+        <article class="fruit type-intern" data-layer="evergreen" data-group="intern" style="--rot:-1.2deg">
+          <span class="pin" aria-hidden="true"></span>
+          <span class="fruit-code" aria-hidden="true">[ INTERNSHIP ]</span>
+          <p class="fruit-year">2025</p>
+          <h3 class="fruit-org">字节跳动</h3>
+          <p class="fruit-role">数据策略</p>
+        </article>
+
+        <article class="fruit type-intern is-major" data-layer="evergreen" data-group="intern" style="--rot:2.4deg">
+          <span class="pin" aria-hidden="true"></span>
+          <span class="fruit-code" aria-hidden="true">[ INTERNSHIP ]</span>
+          <p class="fruit-year">2026</p>
+          <h3 class="fruit-org">腾讯</h3>
+          <p class="fruit-role">产品策划</p>
+        </article>
+
+        <!-- ---- 项目（陶土胶带标记 type-project） ---- -->
+        <article class="fruit type-project is-major" data-layer="evergreen" data-group="project" style="--rot:-1.6deg">
+          <span class="tape" aria-hidden="true"></span>
+          <span class="fruit-code" aria-hidden="true">[ PROJECT ]</span>
+          <h3 class="fruit-org">北京大学 · 零工经济与职业发展课题组</h3>
+          <p class="fruit-role">调研助理</p>
+        </article>
+
+        <article class="fruit type-project" data-layer="evergreen" data-group="project" style="--rot:2deg">
+          <span class="tape" aria-hidden="true"></span>
+          <span class="fruit-code" aria-hidden="true">[ PROJECT ]</span>
+          <h3 class="fruit-org">中国公益研究院 · 儿童福利与保护研究中心</h3>
+          <p class="fruit-role">研究助理</p>
+        </article>
+
+        <article class="fruit type-project" data-layer="evergreen" data-group="project" style="--rot:-2.2deg">
+          <span class="tape" aria-hidden="true"></span>
+          <span class="fruit-code" aria-hidden="true">[ PROJECT ]</span>
+          <h3 class="fruit-org">国际组织</h3>
+          <p class="fruit-role">翻译 / 日常事务</p>
+        </article>
+
+        <article class="fruit type-project" data-layer="evergreen" data-group="project" style="--rot:1.4deg">
+          <span class="tape" aria-hidden="true"></span>
+          <span class="fruit-code" aria-hidden="true">[ PROJECT ]</span>
+          <p class="fruit-year">2024</p>
+          <h3 class="fruit-org">北京大学 · 中国教育财政科学研究所</h3>
+          <p class="fruit-role">调研员</p>
+        </article>
+
+        <!-- ---- 交换（喷漆红代码标签 type-exchange） ---- -->
+        <article class="fruit type-exchange" data-layer="evergreen" data-group="exchange" style="--rot:2.6deg">
+          <span class="clip" aria-hidden="true"></span>
+          <span class="fruit-code" aria-hidden="true">[ EXCHANGE ]</span>
+          <h3 class="fruit-org">巴黎政治学院</h3>
+          <p class="fruit-role">暑期课程</p>
+        </article>
+
+        <article class="fruit type-exchange" data-layer="evergreen" data-group="exchange" style="--rot:-2deg">
+          <span class="clip" aria-hidden="true"></span>
+          <span class="fruit-code" aria-hidden="true">[ EXCHANGE ]</span>
+          <h3 class="fruit-org">牛津大学</h3>
+          <p class="fruit-role">寒假交流</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 层二：GROWING / 芽（中 · 半饱满） ============ -->
+    <section class="layer layer-growing" id="growing" data-layer="growing" aria-label="发芽中 — 正在生长">
+      <span class="layer-node" aria-hidden="true"><i></i>[ SPROUTING_LAYER / 02 ]</span>
+      <span class="graffiti-tag layer-graffiti g-sprout" aria-hidden="true">GROWING</span>
+
+      <div class="sprout-bed" id="sproutBed">
+        <svg class="root-web" id="rootWebSprout" aria-hidden="true"></svg>
+
+        <article class="sprout" data-layer="growing" style="--rot:-1.8deg">
+          <span class="sprout-leaf" aria-hidden="true"></span>
+          <span class="sprout-code" aria-hidden="true">[ SPROUT ]</span>
+          <h3 class="sprout-title">独自背包旅行 10 余个国家</h3>
+        </article>
+
+        <article class="sprout" data-layer="growing" style="--rot:1.5deg">
+          <span class="sprout-leaf" aria-hidden="true"></span>
+          <span class="sprout-code" aria-hidden="true">[ SPROUT ]</span>
+          <h3 class="sprout-title">AI 探索与黑客松旁观爱好者</h3>
+        </article>
+
+        <article class="sprout" data-layer="growing" style="--rot:-1.2deg">
+          <span class="sprout-leaf" aria-hidden="true"></span>
+          <span class="sprout-code" aria-hidden="true">[ SPROUT ]</span>
+          <h3 class="sprout-title">深耕教育行业的非职业选手</h3>
+        </article>
+
+        <article class="sprout" data-layer="growing" style="--rot:2deg">
+          <span class="sprout-leaf" aria-hidden="true"></span>
+          <span class="sprout-code" aria-hidden="true">[ SPROUT ]</span>
+          <h3 class="sprout-title">业余书店收银员</h3>
+        </article>
+
+        <article class="sprout" data-layer="growing" style="--rot:-2.2deg">
+          <span class="sprout-leaf" aria-hidden="true"></span>
+          <span class="sprout-code" aria-hidden="true">[ SPROUT ]</span>
+          <h3 class="sprout-title">兼职大王</h3>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 层三：SEED / 种（底 · 地下最深 · 最朴素） ============ -->
+    <section class="layer layer-seed" id="seed" data-layer="seed" aria-label="种子 — 兴趣与灵感">
+      <span class="layer-node" aria-hidden="true"><i></i>[ SEED_LAYER / 03 ]</span>
+      <span class="graffiti-tag layer-graffiti g-seed" aria-hidden="true">SEEDS</span>
+
+      <div class="seed-bed" id="seedBed">
+        <svg class="root-web" id="rootWebSeed" aria-hidden="true"></svg>
+
+        <article class="seed-dot" data-layer="seed" style="--rot:-3deg">
+          <span class="washi"></span><span class="seed-bud" aria-hidden="true"></span>
+          <h4 class="seed-name">健身</h4>
+        </article>
+        <article class="seed-dot" data-layer="seed" style="--rot:2.4deg">
+          <span class="washi"></span><span class="seed-bud" aria-hidden="true"></span>
+          <h4 class="seed-name">滑雪</h4>
+        </article>
+        <article class="seed-dot" data-layer="seed" style="--rot:-1.8deg">
+          <span class="washi"></span><span class="seed-bud" aria-hidden="true"></span>
+          <h4 class="seed-name">跑步</h4>
+        </article>
+        <article class="seed-dot" data-layer="seed" style="--rot:3deg">
+          <span class="washi"></span><span class="seed-bud" aria-hidden="true"></span>
+          <h4 class="seed-name">摄影</h4>
+        </article>
+        <article class="seed-dot" data-layer="seed" style="--rot:-2.4deg">
+          <span class="washi"></span><span class="seed-bud" aria-hidden="true"></span>
+          <h4 class="seed-name">写些东西</h4>
+        </article>
+        <article class="seed-dot" data-layer="seed" style="--rot:1.6deg">
+          <span class="washi"></span><span class="seed-bud" aria-hidden="true"></span>
+          <h4 class="seed-name">画画</h4>
+        </article>
+        <article class="seed-dot" data-layer="seed" style="--rot:-2.8deg">
+          <span class="washi"></span><span class="seed-bud" aria-hidden="true"></span>
+          <h4 class="seed-name">电视剧和综艺大王</h4>
+        </article>
+        <article class="seed-dot" data-layer="seed" style="--rot:2.2deg">
+          <span class="washi"></span><span class="seed-bud" aria-hidden="true"></span>
+          <h4 class="seed-name">手工</h4>
+        </article>
+        <article class="seed-dot" data-layer="seed" style="--rot:-1.4deg">
+          <span class="washi"></span><span class="seed-bud" aria-hidden="true"></span>
+          <h4 class="seed-name">占卜入门</h4>
+        </article>
+        <article class="seed-dot" data-layer="seed" style="--rot:2.8deg">
+          <span class="washi"></span><span class="seed-bud" aria-hidden="true"></span>
+          <h4 class="seed-name">投资小白</h4>
+        </article>
+        <article class="seed-dot" data-layer="seed" style="--rot:-2.2deg">
+          <span class="washi"></span><span class="seed-bud" aria-hidden="true"></span>
+          <h4 class="seed-name">多语种努力中</h4>
+        </article>
+
+        <!-- 根球收尾 -->
+        <span class="root-ball" aria-hidden="true"></span>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="code-tag" aria-hidden="true">[ SIGNATURE_ASSET ]</span>
+      <span class="footer-sig-group">
+        <span class="footer-sig">curated &amp; pressed by Claire — 2026</span>
+        <span class="footer-wechat">微信公众号 · 现任地球体验家</span>
+      </span>
+      <a class="back-top" href="#top">↑ BACK_TO_TOP</a>
+    </footer>
+  </main>
+
+  <!-- 空状态提示 -->
+  <div class="empty-hint" id="emptyHint" hidden>[ EMPTY ] 这片苗圃暂时还没有发芽 🌱</div>
+
+  <script src="script.js"></script>
+</body>
+</html>

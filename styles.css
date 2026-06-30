@@ -1,0 +1,623 @@
+/* =========================================================
+   The Digital Herbary & Chaos — 数字温室标本馆与混沌繁育地
+   Design System v2 · Blueprint Specimen Wall
+   工程蓝图标本墙：深色网格底 + 技术标注 + 街头涂鸦
+   ========================================================= */
+
+:root {
+  /* ---- Color Palette (依据参考图：深墨绿工程底) ---- */
+  --bg-deep:    #1E2820;
+  --bg-deep-2:  #243027;
+  --grid-line:  rgba(201, 211, 194, .07);
+  --paper:      #FAF8F5;
+  --paper-2:    #F2EEE6;
+  --ink:        #2D3A2E;
+  --clay:       #8C7B65;
+
+  --on-deep:        #E8EDE4;
+  --on-deep-soft:   rgba(232, 237, 228, .58);
+  --on-deep-faint:  rgba(232, 237, 228, .34);
+  --ink-soft:       rgba(45, 58, 46, .64);
+
+  --spray-red:  #C7402E;
+  --spray-amber:#E0A33E;
+
+  --serif:  "Playfair Display", Georgia, serif;
+  --sans:   "Inter", "Helvetica Neue", Arial, sans-serif;
+  --hand:   "Caveat", cursive;
+  --mono:   "JetBrains Mono", "Courier New", monospace;
+  --marker: "Permanent Marker", sans-serif;
+  --bungee: "Bungee", "Permanent Marker", sans-serif;
+
+  --gap: 24px;
+  --radius: 3px;
+  --dash: 1px dashed var(--clay);
+  --dash-deep: 1px dashed rgba(201,211,194,.4);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--on-deep);
+  font-family: var(--sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* ---- 工程蓝图网格底 ---- */
+.blueprint-grid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(rgba(201,211,194,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,211,194,.03) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+}
+.paper-grain {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .5;
+  background-image: radial-gradient(rgba(201,211,194,.05) 1px, transparent 1px);
+  background-size: 7px 7px;
+}
+.corner-mark {
+  position: fixed; z-index: 2; pointer-events: none;
+  font-family: var(--mono); font-size: 18px; color: var(--on-deep-faint);
+}
+.corner-mark.tl { top: 14px; left: 14px; }
+.corner-mark.tr { top: 14px; right: 14px; }
+.corner-mark.bl { bottom: 14px; left: 14px; }
+.corner-mark.br { bottom: 14px; right: 14px; }
+
+/* ---- 技术代码标签 ---- */
+.code-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10.5px; font-weight: 500; letter-spacing: .8px;
+  color: var(--on-deep-soft);
+  border: 1px solid rgba(201,211,194,.28);
+  background: rgba(30,40,32,.5);
+  padding: 3px 8px; border-radius: 2px;
+}
+.card-code {
+  position: absolute; top: 12px; left: 12px; z-index: 4;
+  font-family: var(--mono);
+  font-size: 9.5px; letter-spacing: .6px;
+  color: var(--clay);
+  background: var(--paper);
+  border: 1px solid var(--clay);
+  padding: 2px 7px; border-radius: 2px;
+}
+
+/* =========================================================
+   顶部栏 + 状态过滤器
+   ========================================================= */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--gap); flex-wrap: wrap;
+  padding: 14px clamp(20px, 5vw, 56px);
+  background: rgba(30, 40, 32, .85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201,211,194,.18);
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-mark { font-size: 24px; color: var(--clay); transform: rotate(-8deg); }
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand-title { font-family: var(--mono); font-weight: 700; font-size: 15px; letter-spacing: 1px; color: var(--on-deep); }
+.brand-cn {
+  font-family: var(--hand); font-weight: 700;
+  font-size: 20px; letter-spacing: 1px;
+  color: var(--clay); margin-left: 9px;
+  vertical-align: -1px;
+}
+.brand-sub { font-family: var(--mono); font-size: 10px; color: var(--on-deep-soft); letter-spacing: .5px; }
+
+.status-filter { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.filter-label { font-family: var(--mono); font-size: 10px; color: var(--on-deep-faint); margin-right: 4px; }
+.filter-btn {
+  font-family: var(--mono); font-size: 11.5px; font-weight: 500;
+  color: var(--on-deep);
+  background: transparent;
+  border: 1px solid rgba(201,211,194,.3);
+  border-radius: 2px;
+  padding: 6px 12px; cursor: pointer;
+  transition: transform .25s var(--spring), background .25s ease, color .25s ease, border-color .25s ease;
+}
+.filter-btn .ic { margin-right: 1px; }
+.filter-btn:hover { transform: translateY(-2px); border-color: var(--clay); color: var(--clay); }
+.filter-btn.is-active { background: var(--paper); color: var(--ink); border-color: var(--paper); font-weight: 700; }
+
+/* =========================================================
+   Canvas
+   ========================================================= */
+.canvas {
+  position: relative; z-index: 1;
+  max-width: 1280px; margin: 0 auto;
+  padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 56px) 40px;
+}
+.section-head { margin: clamp(52px, 8vw, 96px) 0 30px; }
+.section-head .code-tag { margin-bottom: 12px; }
+.section-title {
+  font-family: var(--bungee);
+  font-weight: 400;
+  font-size: clamp(30px, 6vw, 60px);
+  line-height: .98; letter-spacing: 1px;
+  color: var(--on-deep);
+  text-transform: uppercase;
+}
+.section-tag {
+  font-family: var(--mono); font-size: 12.5px; color: var(--clay);
+  margin-top: 10px; letter-spacing: .3px;
+}
+
+/* =========================================================
+   区块 1 · HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  display: grid; grid-template-columns: 58% 42%;
+  gap: var(--gap); align-items: center;
+  padding-top: 18px;
+}
+.hero-left { position: relative; }
+.tag-tl { margin-bottom: 18px; }
+.hero-eyebrow {
+  font-family: var(--mono); font-size: 12px; letter-spacing: .5px;
+  color: var(--clay); margin-bottom: 16px;
+}
+.hero-title {
+  font-family: var(--serif); font-weight: 800;
+  font-size: clamp(32px, 5.6vw, 64px); line-height: 1.08;
+  letter-spacing: -.5px; color: var(--on-deep);
+}
+.hero-title em {
+  font-style: italic; font-weight: 500; color: var(--clay);
+}
+/* 标题里的街头涂鸦词 */
+.graffiti-word {
+  font-family: var(--marker);
+  font-style: normal;
+  color: var(--paper);
+  position: relative;
+  display: inline-block;
+  transform: rotate(-3deg);
+  padding: 0 6px;
+}
+.graffiti-word::before {
+  content: ""; position: absolute; inset: 4px -2px;
+  background: var(--spray-red);
+  z-index: -1; transform: rotate(-1.5deg) skewX(-6deg);
+  border-radius: 40% 60% 55% 45% / 60% 50% 50% 40%;
+}
+.hero-intro {
+  max-width: 52ch; margin-top: 24px;
+  font-size: 15px; color: var(--on-deep-soft);
+}
+.hero-signature {
+  font-family: var(--hand); font-size: 42px; color: var(--on-deep);
+  margin-top: 18px; transform: rotate(-5deg); transform-origin: left;
+}
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 26px;
+  font-family: var(--mono); font-size: 13px; font-weight: 500;
+  color: var(--ink); background: var(--paper);
+  padding: 11px 20px; border-radius: 2px; text-decoration: none;
+  transition: transform .3s var(--spring), background .3s ease, color .3s ease;
+}
+.hero-cta:hover { transform: translateY(-3px); background: var(--clay); color: var(--paper); }
+.hero-cta .arrow { transition: transform .3s var(--spring); }
+.hero-cta:hover .arrow { transform: translateY(3px); }
+
+/* 蕨类标本插画 */
+.hero-right { position: relative; display: flex; justify-content: center; }
+.tag-illu { position: absolute; top: -10px; left: 8px; z-index: 5; }
+.greenhouse-illu {
+  position: relative; width: 100%; max-width: 320px;
+  aspect-ratio: 3 / 4.4;
+  border: var(--dash-deep);
+  border-radius: var(--radius);
+  background:
+    repeating-linear-gradient(0deg, rgba(201,211,194,.05) 0 11px, transparent 11px 12px),
+    rgba(36,48,39,.5);
+  padding: 24px 18px;
+}
+.fern-svg { width: 100%; height: 100%; display: block; }
+.collage-bits {
+  position: absolute; bottom: 18px; left: 16px;
+  display: flex; gap: 3px;
+}
+.collage-bits i {
+  width: 16px; height: 16px; background: var(--c); opacity: .85;
+  display: block;
+}
+.collage-bits i:nth-child(1){ transform: rotate(8deg); }
+.collage-bits i:nth-child(2){ transform: rotate(-10deg) translateY(4px); }
+.collage-bits i:nth-child(3){ transform: rotate(14deg); }
+.collage-bits i:nth-child(4){ transform: rotate(-6deg) translateY(2px); }
+.hero-washi {
+  position: absolute; top: -12px; right: 26px;
+  width: 88px; height: 26px;
+  background: rgba(224,163,62,.55);
+  transform: rotate(7deg); opacity: .8;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+}
+.hero-washi::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 6px, rgba(255,255,255,.25) 6px 8px);
+}
+/* 连接引线（参考图的 INTERACTION_FLOW） */
+.leader-line {
+  position: absolute; pointer-events: none;
+}
+.v-leader {
+  left: -14px; top: 20%; height: 60%; width: 1px;
+  background: repeating-linear-gradient(0deg, var(--clay) 0 4px, transparent 4px 9px);
+}
+
+/* graffiti 线条：划过霓虹反转 + 笔触生长 */
+.graffiti-line {
+  stroke-dasharray: 600; stroke-dashoffset: 0;
+  transition: stroke .35s ease, filter .35s ease;
+}
+.card:hover .graffiti-line {
+  stroke: var(--spray-red);
+  filter: drop-shadow(0 0 6px rgba(199,64,46,.7));
+  animation: draw 1s var(--spring);
+}
+@keyframes draw { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
+
+/* =========================================================
+   地平线 / 土壤表层
+   ========================================================= */
+.ground-line {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; gap: 14px;
+  margin: clamp(40px, 7vw, 80px) 0 8px;
+}
+.ground-line::before, .ground-line::after {
+  content: ""; flex: 1; height: 1px;
+  background: repeating-linear-gradient(90deg, rgba(201,211,194,.4) 0 7px, transparent 7px 14px);
+}
+.ground-label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .8px;
+  color: var(--on-deep-soft); white-space: nowrap;
+}
+.corner-mark.gl-l, .corner-mark.gl-r { position: static; font-size: 14px; }
+
+/* =========================================================
+   根系主茎（纵向贯穿三层）
+   ========================================================= */
+.taproot {
+  position: absolute; z-index: 0; pointer-events: none;
+  left: 50%; transform: translateX(-50%);
+  top: 0; height: 100%;
+  width: min(46vw, 560px);
+}
+.taproot-path {
+  stroke-dasharray: 2400;
+  stroke-dashoffset: 2400; /* JS 随滚动减小 → 生长 */
+  transition: stroke-dashoffset .2s linear;
+}
+
+/* =========================================================
+   三层通用骨架
+   ========================================================= */
+.layer {
+  position: relative; z-index: 1;
+  padding: clamp(30px, 5vw, 60px) 0;
+  transition: opacity .4s ease;
+}
+/* 纵向色温渐变：果层透出暖光，越往下越冷暗 */
+.layer-evergreen { background:
+  radial-gradient(120% 80% at 50% 0%, rgba(224,163,62,.05), transparent 60%); }
+.layer-seed { background:
+  radial-gradient(120% 90% at 50% 100%, rgba(0,0,0,.18), transparent 60%); }
+
+.layer-node {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .7px;
+  color: var(--on-deep-soft);
+  border: 1px solid rgba(201,211,194,.28);
+  background: rgba(30,40,32,.6);
+  padding: 4px 11px; border-radius: 2px;
+  margin-bottom: 26px;
+}
+.layer-node i {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--clay); box-shadow: 0 0 0 3px rgba(140,123,101,.25);
+}
+
+/* 每层街头涂鸦大字（背景装饰） */
+.layer-graffiti {
+  position: absolute; z-index: 0; pointer-events: none;
+  font-family: var(--marker);
+  -webkit-text-stroke: 1px rgba(201,211,194,.18);
+  color: transparent;
+  line-height: .85; user-select: none;
+}
+.g-fruit  { top: 10px;  right: 2%;  font-size: clamp(48px, 11vw, 130px); transform: rotate(-5deg); }
+.g-sprout { top: -6px;  right: 3%;  font-size: clamp(40px, 9vw, 104px);  transform: rotate(4deg); }
+.g-seed   { bottom: 6%; right: 3%;  font-size: clamp(40px, 9vw, 100px);  transform: rotate(-7deg); }
+
+/* 同层根须连线 SVG 覆盖整层 */
+.root-web {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  width: 100%; height: 100%; overflow: visible;
+}
+.root-web path {
+  fill: none; stroke: var(--clay); stroke-width: 1;
+  stroke-dasharray: 4 5; opacity: .28;
+  transition: opacity .35s ease, stroke .35s ease, stroke-width .35s ease;
+}
+
+/* 悬停聚焦：非聚焦层变暗 */
+body[data-focus-layer] .layer:not(.is-focus) { opacity: .4; }
+/* 聚焦层内：高亮的同层根须 */
+.root-web path.is-lit {
+  opacity: 1; stroke: var(--spray-red); stroke-width: 1.6;
+  filter: drop-shadow(0 0 5px rgba(199,64,46,.5));
+}
+
+/* =========================================================
+   果层 · ORCHARD（随性错落标本墙）
+   ========================================================= */
+.orchard {
+  position: relative; z-index: 2;
+  display: flex; flex-wrap: wrap;
+  gap: 22px 26px; align-items: flex-start; justify-content: center;
+}
+.fruit {
+  position: relative;
+  background: var(--paper); color: var(--ink);
+  border: 1px solid rgba(45,58,46,.55);
+  border-radius: var(--radius);
+  padding: 26px 22px 20px;
+  transform: rotate(var(--rot, 0deg));
+  transform-style: preserve-3d;
+  transition: transform .4s var(--spring), box-shadow .4s ease, opacity .45s ease;
+  will-change: transform;
+  box-shadow: 0 12px 30px -18px rgba(0,0,0,.65);
+  flex: 0 1 auto;
+  min-width: 190px; max-width: 300px;
+}
+.fruit:hover { box-shadow: 0 24px 52px -22px rgba(0,0,0,.75); z-index: 6; }
+.fruit.is-major { min-width: 250px; max-width: 360px; padding: 32px 28px 24px; }
+
+.fruit-code {
+  display: block; font-family: var(--mono); font-size: 9px;
+  letter-spacing: .6px; color: var(--clay); margin-bottom: 10px;
+}
+.fruit-year {
+  font-family: var(--mono); font-size: 12px; color: var(--clay);
+  letter-spacing: 1px; margin-bottom: 4px;
+}
+.fruit-org {
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(17px, 1.7vw, 22px); line-height: 1.18; color: var(--ink);
+}
+.fruit-role {
+  font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft);
+  margin-top: 7px;
+}
+
+/* 三类标本小标记 ---------------------------------- */
+/* 实习：蓝色图钉 */
+.type-intern { border-style: solid; }
+.pin {
+  position: absolute; top: -8px; left: 16px; width: 16px; height: 16px;
+  border-radius: 50%; background: radial-gradient(circle at 35% 30%, #6FA8C9, #2E6E92);
+  box-shadow: 0 3px 6px rgba(0,0,0,.4); z-index: 5;
+}
+.pin::after {
+  content: ""; position: absolute; top: 13px; left: 7px;
+  width: 1.5px; height: 9px; background: rgba(45,58,46,.4);
+}
+/* 项目：陶土色胶带 */
+.type-project { border-style: dashed; }
+.tape {
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-3deg);
+  width: 84px; height: 22px; background: rgba(140,123,101,.7); opacity: .9;
+  box-shadow: 0 1px 4px rgba(0,0,0,.25); z-index: 5;
+}
+.tape::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 5px, rgba(255,255,255,.22) 5px 8px);
+}
+/* 交换：木质小夹子（风格同图钉/胶带，中性色） */
+.type-exchange { border-color: rgba(45,58,46,.5); border-style: solid; }
+.clip {
+  position: absolute; top: -13px; left: 50%;
+  transform: translateX(-50%) rotate(-4deg);
+  width: 26px; height: 30px; z-index: 5;
+}
+/* 夹子两片夹臂 */
+.clip::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, #B89B74 0 11px, transparent 11px 15px, #B89B74 15px 26px);
+  border-radius: 4px 4px 3px 3px;
+  box-shadow: 0 3px 7px -2px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.35);
+}
+/* 夹子中间金属转轴 */
+.clip::after {
+  content: ""; position: absolute; top: 13px; left: 50%;
+  transform: translateX(-50%);
+  width: 18px; height: 4px; border-radius: 2px;
+  background: linear-gradient(180deg, #9c8662, #6e5c42);
+  box-shadow: 0 1px 2px rgba(0,0,0,.4);
+}
+
+/* =========================================================
+   芽层 · SPROUT BED
+   ========================================================= */
+.sprout-bed {
+  position: relative; z-index: 2;
+  display: flex; flex-wrap: wrap; gap: 20px 24px; justify-content: center;
+}
+.sprout {
+  position: relative;
+  background: var(--paper-2); color: var(--ink);
+  border: 1px solid rgba(45,58,46,.4);
+  border-right-style: dashed; border-bottom-style: dashed;
+  border-radius: var(--radius);
+  padding: 22px 24px 20px 30px;
+  transform: rotate(var(--rot, 0deg));
+  transition: transform .4s var(--spring), box-shadow .4s ease, opacity .45s ease;
+  box-shadow: 0 10px 26px -18px rgba(0,0,0,.55);
+  flex: 0 1 auto; max-width: 360px;
+}
+.sprout:hover { box-shadow: 0 18px 42px -20px rgba(0,0,0,.7); z-index: 6; }
+.sprout-code {
+  display: block; font-family: var(--mono); font-size: 9px;
+  color: var(--clay); letter-spacing: .6px; margin-bottom: 8px;
+}
+.sprout-title {
+  font-family: var(--serif); font-weight: 700; font-size: clamp(15px, 1.6vw, 19px);
+  line-height: 1.3; color: var(--ink);
+}
+/* 抽芽嫩叶 */
+.sprout-leaf {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  width: 12px; height: 18px;
+  background: radial-gradient(circle at 50% 100%, #6FA86B, #3E7C4E);
+  border-radius: 0 80% 0 80%;
+}
+
+/* =========================================================
+   种子层 · SEED BED（最朴素 · 地下）
+   ========================================================= */
+.seed-bed {
+  position: relative; z-index: 2;
+  display: flex; flex-wrap: wrap; gap: 16px 20px; justify-content: center;
+  padding-bottom: 50px;
+}
+.seed-dot {
+  position: relative;
+  background: rgba(250,248,245,.82); color: var(--ink);
+  border: 1px dashed rgba(140,123,101,.7);
+  border-radius: 40px;
+  padding: 12px 20px 12px 30px;
+  transform: rotate(var(--rot, 0deg));
+  transition: transform .4s var(--spring), box-shadow .4s ease, opacity .45s ease, background .3s ease;
+  box-shadow: 0 6px 18px -12px rgba(0,0,0,.5);
+}
+.seed-dot:hover { background: var(--paper); box-shadow: 0 14px 30px -16px rgba(0,0,0,.65); z-index: 6; }
+.seed-dot .washi {
+  width: 48px; height: 16px; top: -8px; left: 18px; transform: rotate(-6deg);
+}
+.seed-bud {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--clay); box-shadow: 0 0 0 3px rgba(140,123,101,.2);
+}
+.seed-name {
+  font-family: var(--serif); font-weight: 600; font-size: 15px; color: var(--ink);
+  white-space: nowrap;
+}
+/* 根球收尾 */
+.root-ball {
+  position: absolute; left: 50%; bottom: 4px; transform: translateX(-50%);
+  width: 26px; height: 26px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, var(--clay), #5e503f);
+  box-shadow: 0 0 0 6px rgba(140,123,101,.15), 0 8px 18px -8px rgba(0,0,0,.6);
+  z-index: 3;
+}
+
+/* 隐藏（过滤用） */
+.fruit.is-hidden, .sprout.is-hidden, .seed-dot.is-hidden {
+  opacity: 0; transform: scale(.9); pointer-events: none; display: none;
+}
+
+/* washi 通用（沿用） */
+.washi {
+  position: absolute;
+  background: rgba(224,163,62,.6); opacity: .85;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.washi::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 5px, rgba(255,255,255,.3) 5px 7px);
+}
+
+/* =========================================================
+   Footer / Empty
+   ========================================================= */
+.footer {
+  margin-top: clamp(56px, 8vw, 100px); padding-top: 24px;
+  border-top: var(--dash-deep);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-sig-group { display: flex; flex-direction: column; gap: 3px; align-items: center; }
+.footer-sig { font-family: var(--hand); font-size: 24px; color: var(--clay); }
+.footer-wechat {
+  font-family: var(--hand); font-size: 19px; color: var(--on-deep-soft);
+  letter-spacing: .5px;
+}
+.back-top { font-family: var(--mono); font-size: 12px; color: var(--on-deep-soft); text-decoration: none; letter-spacing: .5px; }
+.back-top:hover { color: var(--clay); }
+
+.empty-hint {
+  position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%);
+  font-family: var(--mono); font-size: 13px;
+  background: var(--paper); color: var(--ink);
+  padding: 10px 20px; border-radius: 2px; z-index: 60;
+  box-shadow: 0 8px 24px -10px rgba(0,0,0,.6);
+}
+
+/* =========================================================
+   响应式
+   ========================================================= */
+@media (max-width: 880px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { order: -1; max-width: 280px; }
+  .v-leader { display: none; }
+  .topbar { justify-content: center; }
+  .taproot { width: 80vw; opacity: .5; }
+  /* 平板：两列错落，保留大小差异 */
+  .fruit { min-width: 0; flex: 1 1 calc(50% - 20px); max-width: calc(50% - 20px); }
+  .fruit.is-major { flex: 1 1 100%; max-width: 100%; }
+  .sprout { max-width: 100%; flex: 1 1 calc(50% - 16px); }
+}
+
+/* ---------- 手机专用断点 (≤560px) ---------- */
+@media (max-width: 560px) {
+  /* 1) 顶部筛选：仅留图标 + 单字，省空间 */
+  .topbar { padding: 12px 16px; gap: 12px; }
+  .filter-label { display: none; }
+  .status-filter { gap: 6px; justify-content: center; }
+  .filter-btn { padding: 7px 10px; font-size: 12px; }
+  .filter-btn .txt { display: none; }
+  /* 用 data 属性补一个中文单字，保持可辨识 */
+  .filter-btn[data-filter="all"]::after      { content: "全"; }
+  .filter-btn[data-filter="seed"]::after     { content: "种"; }
+  .filter-btn[data-filter="growing"]::after  { content: "芽"; }
+  .filter-btn[data-filter="evergreen"]::after{ content: "果"; }
+  .filter-btn::after { font-family: var(--serif); font-weight: 700; font-size: 13px; margin-left: 3px; }
+
+  /* 2) 果层：保持两列错落，奇偶错位营造拼贴感 */
+  .orchard { gap: 16px 12px; }
+  .fruit { flex: 1 1 calc(50% - 12px); max-width: calc(50% - 12px); padding: 20px 14px 16px; }
+  .fruit.is-major { flex: 1 1 calc(50% - 12px); max-width: calc(50% - 12px); padding: 22px 16px 18px; }
+  /* 偶数卡向下错位，制造高低交错 */
+  .fruit:nth-child(even) { margin-top: 22px; }
+  .fruit-org { font-size: 15px; }
+  .fruit-role { font-size: 11.5px; }
+  .sprout { flex: 1 1 100%; max-width: 100%; }
+
+  /* 3) 涂鸦大字：缩小并内收定位，避免溢出被裁 */
+  .layer-graffiti { font-size: clamp(34px, 13vw, 64px) !important; }
+  .g-fruit  { right: 4%; }
+  .g-sprout { left: 2%; }
+  .g-seed   { right: 5%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Editor / IDE
+.codebuddy/
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Node (如未来引入)
+node_modules/
