@@ -6,13 +6,21 @@
   <title>The Digital Herbary &amp; Chaos · 数字温室标本馆</title>
   <meta name="description" content="数字温室标本馆与混沌繁育地 — 一张拼贴理性实习项目与感性爱好涂鸦的标本桌面。" />
 
-  <!-- Fonts -->
+  <!-- Fonts：异步加载，字体未到时用系统回退字体先渲染，避免被墙/慢网时卡白屏 -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;0,900;1,500;1,700&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&family=Permanent+Marker&family=Bungee&family=JetBrains+Mono:wght@400;500;700&display=swap"
     rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;0,900;1,500;1,700&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&family=Permanent+Marker&family=Bungee&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    media="print"
+    onload="this.media='all'"
   />
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;0,900;1,500;1,700&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&family=Permanent+Marker&family=Bungee&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    />
+  </noscript>
 
   <link rel="stylesheet" href="styles.css" />
 </head>
